@@ -7,6 +7,7 @@
 \usepackage{amsfonts}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{dsfont}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Pn}{\mathbb{P}}
 \newcommand{\indep}{\perp \!\!\! \perp}
@@ -602,4 +603,477 @@ La famiglia di \(\{E_1,...,E_n\}\) di eventi è indipendente se \textbf{per ogni
 Devo quindi dimostrare la \textbf{proprietà di fattorizzazione} per ogni coppia, terna, quaterna, ecc. di eventi. Devo considerare \textbf{tutte le possibili sottofamiglie}.
 \paragraph{Osservazione} Se \(\{E_1,...,E_n\}\) è una famiglia di eventi indipendenti, quando sostituisco qualche \(E_i\) (non importa quanti e quali) con \(E_i^c\) ottengo ancora una famiglia di eventi \textbf{indipendenti}.\\
 La famiglia \textbf{numerabile} di eventi \(\{E_1,E_2,...\}\) è indipendente se ogni sottofamiglia finita lo è.
+
+\chapter{Lezione 7}
+\section{Variabili Aleatorie Discrete}
+Sia (\(\Omega, \Pn(\Omega), P\)) uno spazio di probabilità discreto. Ogni mappa: \[X: \Omega \xrightarrow{} \mathbb{R}\] è detta \textbf{variabile aleatoria} (o casuale) discreta su \(\mathbb{R}\).\\
+Nella mappa X, \textbf{ad ogni esito viene associato un numero}.
+\begin{figure}[hb]
+    \centering
+    \includegraphics[width = 10cm]{AlfabetoX.png}
+    \caption{Vediamo qui l'Alfabeto di X, che è l'immagine di X}
+    \label{fig:AlfabetoX}
+\end{figure}
+Abbiamo che \[\textit{X} = X(\Omega) = \{x \in \mathbb{R}:\ X(\omega) = x\ per\ qualche\ \omega \in \Omega\}\]
+\paragraph{Importante!} \textit{X} è \textbf{discreto} ed ho che \[|\textit{X}| \leq |\Omega| \leq |\mathbb{N}|\]
+\subsection{Esempi}\begin{enumerate}
+    \item Sia (\(\Omega,\Pn(\Omega), P\)) uno spazio di probabilità discreto. Sia E \(\in \Pn(\Omega)\) un qualsiasi evento. Possiamo definire la variabile aleatoria \(\mathds{1}_E (\omega): \Omega \xrightarrow{} \mathbb{R}\) definita come: \[
+    \mathds{1}_E (\omega) = \begin{cases}
+    1, & \text{se }\omega \in E\\
+    0, & \text{altrimenti}
+    \end{cases}
+    \]
+    Questa variabile si chiama \textbf{indicatrice} ed ha alfabeto \{0,1\}.
+    \item Sia ora \(\Omega = \{(d_1,d_2): d_1,d_2 \in \{1,...,6\}\}\) lo spazio campionario relativo al lancio di una coppia di dadi, dove \(d_i\) indica il punteggio dell'i-esimo dado, ed i = 1,2.\\
+    Vediamo qualche variabile aleatoria che si può creare.
+    \begin{itemize}
+        \item \(\omega = (d_1,d_2) \longmapsto X_1(\omega) = d_1\) \\ 
+        Mappo gli eventi verso la variabile aleatoria \(X_1\) e questo mi dice di considerare solo il lancio del valore \(d_1\). L'alfabeto sarà \(X_1 = \{1,...,6\}\). Il discorso sulla mappatura vale anche per i prossimi esempi.
+        \item \(\omega = (d_1,d_2) \longmapsto X_2(\omega) = d_2\) con alfabeto \(X_2 = \{1,...,6\}\)
+        \item \(\omega = (d_1,d_2) \longmapsto X_3(\omega) = min \{d_1,d_2\}\) con alfabeto \(X_3 = \{1,...,6\}\)
+        \item \(\omega = (d_1,d_2) \longmapsto X_4(\omega) = max \{d_1,d_2\}\) con alfabeto \(X_4 = \{1,...,6\}\)
+        \item \(\omega = (d_1,d_2) \longmapsto X_5(\omega) = d_1 + d_2\) con alfabeto \(X_5 = \{2,3,...,12\}\)
+    \end{itemize}
+\end{enumerate}
+\paragraph{Osservazione} Se vengono definite sullo stesso spazio di probabilità, diverse variabili aleatorie possono essere \textbf{combinate} attraverso \textbf{operazioni}, come ad esempio \[X+Y, X-Y, X\cdot Y, X/Y, min \{X,Y\}, max \{X, Y\}\] queste sono ancora variabili aleatorie, come nell'esempio 2, in cui avevamo \(X_3, X_4 \text{ e }X_5\).
+\section{Misura di probabilità indotta}
+Poichè \textit{X} è un insieme discreto, basta assegnare una probabilità \(P^X\) ad \textbf{ogni singoletto} di \textit{X}, compatibile con la probabilità P di (\(\Omega, \Pn(\Omega), P\)) dove X è definita.
+\subsection{Definizione Probabilità Indotta} La definizione è questa: \[P^X(x_k) = P(X^{-1}(x_k)) \forall x_k \in \textit{X}\] che si può anche scrivere come: \[P^X(x_k) = P(X = x_k) \forall x_k \in \textit{X}\]
+Cosa significa? Significa che la probabilità totale dei valori che fanno verificare \(x_k\) è \textbf{uguale} alla probabilità che si verifichi \(x_k\) dell'alfabeto.\\
+Ciascuno dei valori dell'alfabeto si osserverà se \textbf{qualcuno degli esiti mappati in questo valore si verifica}.
+\subsection{Lemma e Dimostrazione} \(P^X\) è una misura di probabilità.
+\paragraph{Dimostrazione} Poichè \textit{X} è discreto, basta verificare: \begin{enumerate}
+    \item \(P^X (x_k) \geq 0\) \(\forall x \in \textit{X}\)
+    \item \(\sum_{x_k \in \textit{X}}P^X (x_k) = 1\)
+\end{enumerate}
+\paragraph{Verifico} \begin{enumerate}
+    \item \(P^X(x_k) = P(X^{-1}(x_k))\) ma P è misura di probabilità e quindi positiva
+    \item Osserviamo il fatto che X sia una funzione: ciò implica che la funzione delle anti-immagini (ovvero gli esiti che poi vengono mappati nell'alfabeto) \[\{X^{-1}(X_k)\}_{x_k \in \textit{X}}\] sia una \textbf{partizione} di \(\Omega\), cioè: \begin{itemize}
+        \item \(X^{-1}(x_k) \cap X^{-1}(x_j) = \varnothing,\ \forall k \neq j\)
+        \item \(\bigcup_{x_k \in \textit{X}} X^{-1}(x_k) = \Omega\)
+    \end{itemize}
+    Quindi otteniamo che: \[\sum_{x_k \in \textit{X}}P^X (x_k) = \sum_{x_k \in \textit{X}}P(X^{-1}(x_k))\] \[= P(\bigcup_{x_k \in \textit{X}} X^{-1} (x_k))\] \[= P(\Omega) = 1\] come volevasi dimostrare.
+    \begin{figure}[hb]
+        \centering
+        \includegraphics[width = 12cm]{NuvoleProbabilità.png}
+        \caption{In questa figura vediamo chiaramente che le nuvole di probabilità sono distinte e disgiunte e si può vedere chiaramente ciò che è stato appena dimostrato.}
+        \label{fig:NuvoleProbabilita}
+    \end{figure}
+\end{enumerate}
+\clearpage
+\section{Esempi e descrizione probabilistica}
+\begin{enumerate}
+    \item Ritorniamo all'esempio del lancio di 2 dadi, e consideriamo la variabile aleatoria \(X_1: \Omega \longmapsto \mathbb{R} \text{ con } (d_1, d_2) \mapsto d_1\)\\
+    Come assegniamo una probabilità sull'alfabeto \(\textit{X}_1 = \{1, ..., 6\}\)? Vediamolo con una figura:
+    \begin{figure}[hb]
+        \centering
+        \includegraphics[width = 11cm]{VariabileAleatoriaLancio2dadi.PNG}
+        \caption{Vediamo qui che ogni lancio del primo dado, come lo abbiamo definito prima, porta alla rappresentazione del numero reale, e l'insieme dei valori dati da \(d_1\) mi dà l'alfabeto \(\textit{X}_1\) }
+        \label{fig:VariabileAleatoriaLancioDadi}
+    \end{figure}
+    La probabilità delle anti-immagini è:
+    \[P^{X_1}(1 \in X_1) = P(X = 1) = P(X_1^{-1}(1))\] \[= P(\{(1,1), (1,2), ..., (1,6)\}) = \frac{1}{6}\]\\
+    \[P^{X_1}(2 \in X_1) = P(X = 2) = P(X_1^{-1}(2))\] \[= P(\{(2,1), (2,2), ..., (2,6)\}) = \frac{1}{6}\] 
+    Analogamente possiamo trovare \[P^{X_1}(3) = P^{X_1}(4) = P^{X_1}(5) = P^{X_1}(6) = \frac{1}{6}\]
+    \clearpage
+    \item Sempre dall'esempio del lancio dei 2 dadi: consideriamo \[X_3: \Omega \xrightarrow{} \mathbb{R}\] \[(d_1,d_2) \mapsto min\{d_1,d_2\}\]
+    Come assegnamo una probabilità su \(X_3 = \{1,...,6\}\)?
+    \begin{figure}[hb]
+        \centering
+        \includegraphics[width = 10cm]{PunteggioDadi2-Lez7.png}
+        \caption{}
+        \label{fig:Esempio2Lez7}
+    \end{figure}
+    \[P^{X_3}(1) = P(X_3^{-1}(1)) = P(X = 1) = P(\text{ parte verde }) = \frac{11}{36}\]
+    \[P^{X_3}(2) = P(X_3^{-1}(2)) = P(2) = P(\text{ parte gialla }) = \frac{1}{4}\]
+    e così via per tutti gli elementi dell'alfabeto \(X_3\)
+\end{enumerate}
+\subsection{Descrizione Probabilistica della variabile aleatoria}
+Se X è una variabile aleatoria discreta, per definirla probabilisticamente utilizziamo questa descrizione:
+\begin{itemize}
+    \item Abbiamo \textit{X} alfabeto \textbf{unito} a 
+    \item \(p_x: \textit{X} \xrightarrow{}[0,1]\\
+    x_k \longmapsto p_x(x_k) = P(X = x_k)\) dove esistono due proprietà: \begin{enumerate}
+        \item \(p_x(x_k) \geq 0, \forall x_k \in \textit{X}\)
+        \item \(\sum_{x_k \in \textit{X}} p_x(x_k) = 1\)
+    \end{enumerate}
+\end{itemize}
+Identifichiamo \(p_x\) come \textbf{densità discreta di probabilità} (o \textbf{legge}) della variabile aleatoria X.
+\subsubsection{Esempio}
+Sia X una var. aleatoria discreta con alfabeto \(\textit{X}=\{0, \sqrt{2}, \pi\}\) e densità discreta \begin{itemize}
+    \item \(p_x(0) = \frac{2}{3}\)
+    \item \(p_x(\sqrt{2}) = p_x(\pi) = \frac{1}{6}\)
+\end{itemize}
+Calcoliamo \(P(1 < X < 4)\). Abbiamo:  
+\begin{align}
+P(1 < X < 4) & = P(X \in \{\sqrt{2}, \pi\})\\
+& = P(\{X = \sqrt{2}\} \cup \{X = \pi\})\\
+& = P(X = \sqrt{2} + P(X = \pi)\\
+& = \frac{1}{3}    
+\end{align}
+\chapter{Lezione 8}
+Ricapitolando possiamo definire una variabile aleatoria in due modi: \begin{enumerate}
+    \item Come funzione \(X: \Omega \xrightarrow{} \mathbb{R}\) di cui si determinano alfabeto \textit{X} e misura di probabilità indotta \(P^x(x_k) = P(X^{-1}(x_k))\), per ogni \(x_k \in \textit{X}\), da cui si deduce la densità \(p_x(x_k) = P^{x}(x_k)\), per ogni \(x_k \in \textit{X}\), che soddisfa positività e normalizzazione.
+    \item Si danno direttamente alfabeto \textit{X} e densità \(p_x(\cdot)\) che soddisfa positività e normalizzazione.
+\end{enumerate}
+\section{Funzione di una variabile aleatoria}
+\(
+\begin{rcases}
+X:\Omega \xrightarrow{} \mathbb{R}, & \text{variabile aleatoria}\\
+g:\mathbb{R} \xrightarrow{} \mathbb{R}, & \text{funzione}
+\end{rcases}
+\) Y = g\(oX:\Omega \xrightarrow{} \mathbb{R}\)
+ variabile aleatoria\\
+Caratterizziamo Y. L'alfabeto è \textit{Y} = g(\textit{X}) e la densità discreta:
+\[p_Y(y_l) = P(Y=y_l) = \sum_{x:g(x_k) = y_l} p_x(x_k) \text{, per ogni }y_l \in \textit{Y}\]
+\subsubsection{Esempio}
+Sia X una v.al. con alfabeto \textit{X} = \{-1,1,3\} e densità discreta \(p_x(-1) = p_x(3) = \frac{1}{4}\) e \(p_x(1) = \frac{1}{2}\).\\
+Caratterizziamo la v.al. Y=\(X^2\): se \begin{itemize}
+    \item g: \(\mathbb{R} \xrightarrow{} \mathbb{R}\)
+    \item g: x \(\longmapsto x^2\)
+\end{itemize}
+abbiamo Y = g(X).\\
+Alfabeto: \textit{Y} = g(\textit{X}) = \{1,9\}\\
+Densità: \begin{align}
+    p_y(1) & = P(\{X = -1\} \cup \{X = 1\})\\
+    & = p_x(-1) + p_x(1) = \frac{1}{4}+\frac{1}{2} = \frac{3}{4}\\
+   & P_y(9) = P(X=3) = p_x(3) = \frac{1}{4}
+\end{align}
+\subsection{Esercizi}
+\begin{enumerate}
+    \item Lancio una moneta e un dado. Se i risultati che ottengo hanno la stessa iniziale vinco 1 euro, altrimenti perdo 50 centesimi.\\ 
+    Sia X la variabile aleatoria che descrive la vincita/perdita. Determinare alfabeto e densità discreta di X.
+    \begin{itemize}
+        \item \textbf{Soluzione}: Alfabeto: \textit{X} = \(\{\frac{-1}{2}, 1\}\), corrispondono a perdita e vincita.\\
+    \item Densità discreta: Uno spazio campionario per il nostro gioco è \[\Omega = \{(a,i): a \in \{T,C\}, i \in \{1,...,6\}\}\]
+    Si ha \(|\Omega| = 2 \cdot 6 = 12\). Calcoliamo la probabilità indotta, che prendiamo come densità di X.
+    \begin{align}
+        p_x(1) = P(X = 1) & = P(\text{i risultati hanno la stessa iniziale})\\
+        & = P(\{(T,3), (C,5)\} = \frac{1}{6}\\
+        & p_x(- \frac{1}{2} = 1 - p_x(1) = \frac{5}{6}
+    \end{align}
+    \end{itemize}
+    \item Estraggo tre carte da un mazzo di carte da poker. Vinco 1 euro per ogni carta di picche estratta.\\
+    Sia X la variabile aleatori che descrive la vincita. Determinare alfabeto e densità discreta di X.
+    \begin{itemize}
+        \item \textbf{Soluzione}: Alfabeto: \textit{X} = \{0,1,2,3\}
+        \item Densità discreta:
+        \begin{align}
+            p_x(0) = P(X = 0) & = P (\text{non pesco carte di picche})\\
+            & = \frac{\binom{39}{3}}{\binom{52}{3}} = \frac{703}{1700}
+        \end{align}
+        \begin{align}
+            p_x(1) = P(1) & = P (\text{pesco 1 carta di picche})\\
+            & = \frac{13 \cdot \binom{39}{2}}{\binom{52}{3}} = \frac{741}{1700}
+        \end{align}
+        \begin{align}
+            p_x(2) = P(2) & = P (\text{pesco 2 carte di picche})\\
+            & = \frac{\binom{13}{2} \cdot 39 }{\binom{52}{3}} = \frac{234}{1700}
+        \end{align}\\
+        \(p_x(3) = 1 - p_x(0) - p_x(1) -p_x(2) = \dfrac{11}{850}\)
+    \end{itemize}
+\end{enumerate}
+\section{Valor Medio (o Atteso)}
+Sia X v.al. con alfabeto \textit{X} e densità discreta \(p_x\). Il valor medio di X è il numero reale: 
+\[E(x) = \sum_{x_k \in \textit{X}} x_k \cdot p_x(x_k)\]
+\paragraph{Osservazione} Se \(|\textit{X}| < \infty\), allora il v.medio è una somma \textbf{finita} ed è \textbf{sempre} ben definito. Se \(|\textit{X}| = +\infty\), allora il v.medio è una serie e \textbf{può non esistere} se la serie \textbf{non converge}.
+\subsubsection{Esempi}
+\begin{enumerate}
+    \item Sia X una v.al. con alfabeto \textit{X} = \(\{-7,0,\pi,4\}\) e densità \(p_x(-7) = \frac{1}{2}\) e \(p_x(0) = p_x(\pi) = p_x(4) = \frac{1}{6}\). Otteniamo:
+    \[E(X) = (-7) \cdot \frac{1}{2} + (4+\pi) \cdot \frac{1}{6} \approx -2.31\]
+    \item Consideriamo uno spazio di probabilità (\(\Omega, \mathbb{P}(\Omega),P\)) ed un evento \(E \in \mathbb{P}(\Omega)\). Definiamo la v.al.
+    \[
+    X(\omega) = \mathds{1}_{E}(\omega) = 
+    \begin{cases}
+    1, & \text{ se } \omega \in E \\
+    0, & \text{ se } \omega \notin E \\
+    \end{cases}
+    \]
+    Allora si ha:
+    \[E(X) = P(X = 1) = P(\{\omega: X(\omega) = 1\}) = P(E)\]
+    \end{enumerate}
+\subsection{Significato del Valor Medio}
+Indice di centralità \(\Longleftrightarrow\) Baricentro della distribuzione.\\
+%figura
+abbiamo dei punti \(\{x_1,...,x_n\}\) con masse \(p_x(x_1),...,p_x(x_n)\) e cerchiamo il baricentro \(a \in \mathbb{R}\) della nuvola di punti. Cerchiamo il punto dove la risultante dei momenti è nulla (\textbf{equilibrio}):
+\begin{align}
+  & \sum_{x_k}(x_k - a) \cdot p_x(x_k) = 0\\
+  & \Longleftrightarrow \sum_{x_k} x_k \cdot p_x(x_k) = a\cdot \underbrace{\sum_{x_k}p_x(x_k)}_\text{= 1}\\
+  & \Longleftrightarrow a = E(x)
+\end{align}
+\subsection{Teorema Fondamentale del valor medio}
+Sia \(X: \Omega \xrightarrow{} \mathbb{R}\) una v.al. discreta, allora si ha:
+\[E(X) = \sum_{\omega \in \Omega} X(\omega)\cdot P(\{\omega\})\]
+\subsubsection{Dimostrazione}
+Calcoliamo:
+    \[E(X) = \sum_{x_k \in \textit{X}} x_k \cdot p_x (x_k)  = \sum_{x_k \in \textit{X}} x_k \cdot P(X^{-1}(x_k))\]\\
+    \begin{align}
+    \text{(definizione di antiimmagine)} & = \sum_{x_k \in \textit{X}} x_k \cdot P(\underbrace{\{\omega: X(\omega) = x_k\})}_\substack{
+    \textbf{Insieme discreto}: \text{ottengo la sua} \\
+    \text{probabilità} \\
+    \text{sommando le probabilità degli esiti}\\
+    \text{che ci appartengono}}\\
+    & = \sum_{x_k \in \textit{X}}x_k \cdot \sum_{\omega: X(\omega) = x_k} \cdot P(\{\omega\})\\
+    & = \underbrace{\sum_{x_k \in \textit{X}}x_k \cdot \sum_{\omega: X(\omega) = x_k}}_\text{vedi (1) sotto} \cdot X(\omega) \cdot P(\{\omega\})\\
+    & = \sum_{\omega \in \Omega} X(\omega) \cdot P(\{\omega\})
+    \end{align}
+    (1): Le due somme descrivono l'insieme: \[\bigcup_{x_k \in \textit{X}} \{\omega : X(\omega) = x_k\} = \Omega\]
+    \[\text{ dove } X(\omega) \longleftrightarrow \{X^{-1}(x_k)\} \text{ (è una partizione)}\]
+\chapter{Lezione 9}
+\section{Proprietà del Valor Medio}
+\subsection{Linearità}
+Descriviamo la linearità attraverso due osservazioni: \begin{enumerate}
+    \item Sia X una v.al., \(a \in \mathbb{R}\), allora \(E(aX) = aE(X)\). Come lo vedo?\\
+    \textit{a}X è la v.al. \(\omega \mapsto aX(\omega)\), allora per il teorema fondamentale otteniamo:
+    \begin{align}
+        E(aX) & = \sum_{\omega \in \Omega}aX(\omega)P(\{\omega\})\\
+        & = a \sum_{\omega \in \Omega} X(\omega) P(\{\omega\}) = aE(X)
+    \end{align}
+    \item Siano X,Y v.al. definite sullo stesso spazio campionario \(\Omega\). Allora E(X+Y) = E(X) + E(Y). Come lo vedo?\\
+    X + Y è la v.al. \(\omega \mapsto X(\omega) + Y(\omega)\), allora per il teorema fondamentale otteniamo:
+    \begin{align}
+        E(X + Y) & = \sum_{\omega \in \Omega} (X(\omega) + Y(\omega))P(\{\omega\})\\
+        & = \sum_{\omega \in \Omega} X(\omega)\cdot P(\{\omega\}) + Y(\omega)\cdot P(\{\omega\})\\
+        & = E(X) + E(Y)
+    \end{align}
+\end{enumerate}
+Potevo definire la proprietà 2. con la definizione del valore medio? 
+\[E(X+Y) = \sum_{x_k \in \textit{X}} \sum_{y_l \in \textit{Y}} (x_k + y_l) \cdot p_{X+Y}(x_k +y_l)\]
+La scrittura \(p_{X+Y}\) avrà senso dalla settimana 8.\\
+Mettendo insieme le proprietà 1. e 2. otteniamo: \[E(aX+bY) = aE(X) + bE(Y)\]
+\subsection{Positività}
+Sia X una v.al. positiva (cioè \textit{X} \(\in \mathbb{R_{+}}\)), allora \(E(X) \geq 0\)
+\subsection{Monotonia}
+Siano X, Y: \(\Omega \xrightarrow{} \mathbb{R}\) v.al. tali che \(X \geq Y\). Allora si può dire che \[E(X) \geq E(Y)\]
+Come lo vedo?\\
+\(X \geq Y \Longleftrightarrow X - Y \geq 0\).\\ 
+Per la positività si ha che \(E(X-Y) \geq 0\).\\ 
+Per la linearità invece si ottiene \(E(X) - E(Y) \geq 0\) da cui concludo la dimostrazione che \(E(X) \geq E(Y)\).
+\subsection{Limiti Inferiore e Superiore}
+Sia X v.al. con alfabeto \textit{X} e siano \(\underline{x} = inf \textit{X}\) e \(\overline{x} = sup \textit{X}\). Allora si ha: \[\underline{x} \leq E(X) \leq \overline{x}\]
+\paragraph{Osservazione:} Se \(b \in \mathbb{R}\) allora E(b) = b.\\
+Possiamo vedere \(b \in \mathbb{R}\) come una v.al. \textbf{costante}, cioè:\\
+X v.al. con alfabeto \textit{X} = \{b\} e densità discreta \(p_x(b) = 1\) e\(p_x(i) = 0\) \(\forall i \neq b\).\\
+Segue dalla definizione di valor medio che E(X) = b.
+\subsection{Teorema (valor medio di funzioni di v.al.)}
+Siano \(X: \Omega \xrightarrow{} \mathbb{R}\) v.al. e \(g: \mathbb{R} \xrightarrow{} \mathbb{R}\) funzione. Si ha: \[E(g(X)) = \sum_{x_k \in \textit{X}} g(x_k) p_x(x_k)\]
+\subsubsection{Esempio}
+Sia X v.al. con alfabeto \textit{X}=\{-1,1,3\} e densità discreta \(p_x(3) = p_x(-1) = \frac{1}{4} \text{ e }p_x(1) = \frac{1}{2}\). Sia inoltre \(Y = X^2\). Calcoliamo E(Y).
+\begin{itemize}
+    \item \textbf{Metodo 1:} Caratterizzo Y (alfabeto + densità) e uso la definizione di valor medio.\\
+    Abbiamo \textit{Y} = \{1,9\} e \(p_y(1) = \frac{3}{4} \text{ e } p_y (3) = \frac{1}{4}\).\\
+    Quindi \[E(Y) = 1 \cdot \frac{3}{4} + 9 \cdot \frac{1}{4} = 3\]
+    \item \textbf{Metodo 2:} Applico direttamente il teorema: 
+    \[E(Y) = (-1)^2 \cdot \frac{1}{4} + 1^2 \cdot \frac{1}{2} + 3^2 \cdot \frac{1}{4} = 3\]
+\end{itemize}
+\subsection{Esercizi}
+\begin{enumerate}
+    \item Un'urna contiene 8 palline nere e 6 bianche. Si fanno due estrazioni senza reinserimento. Per ogni pallina nera estratta si vince 1 euro. Per ogni pallina bianca estratta si perde 1 euro. Sia X la variabile aleatoria che descrive la vincita/perdita del gioco. Calcolare E(X).
+    \paragraph{Soluzione:} Alfabeto: \textit{X} = \{-2, 0, 2\} (corrisponde a: estraggo 2 bianche, estraggo 1 nera e 1 bianca, estraggo 2 nere).\\
+    Densità: 
+    \begin{align}
+      p_x(-2) & = \text{ P(estraggo 2 bianche)}\\
+      & = \frac{\binom{6}{2}}{\binom{14}{2}} = \frac{15}{91}
+      \end{align}
+      \begin{align}
+      & p_x(0) = \frac{8\cdot 6}{\binom{14}{2}} = \frac{48}{91}\\
+      & p_x(2) = 1 - p_x(0) - p_x(-2) = \frac{4}{13}
+      \end{align}
+    Media: \(E(X) = (-2) \cdot \frac{15}{91} + 2\cdot \frac{4}{13} = \frac{2}{7} \approx 0.286\)
+    \item Due dadi sono truccati in modo che la probabilità di ottenere 6 sia il doppio di quella di ottenere ogni altro punteggio. Qual è la media del punteggio ottenuto lanciando i due dadi?
+    \paragraph{Soluzione:} Siano \(X_1 \text{ e } X_2\) le v.al. che corrispondono al punteggio del primo e del secondo dado. Le 2 v.al. hanno lo stesso alfabeto \textit{X}=\{1,...,6\} e la stessa densità discreta che ora determiniamo:\\
+    si ha \(p_{xi}(6) = 2p\)\\
+    \(p_{xi}(j) = p\) per ogni j = 1,...,5\\
+    da cui ricavo \(2p+5p = 1 \Longleftrightarrow p = \frac{1}{7}\).\\
+    Quindi la densità è \[p_{xi}(1) = ... = p_{xi} (5) = \frac{1}{7} \text{ e } p_{xi}(6) = \frac{2}{7}\]
+    Ora sia \(Y = X_1 + X_2\) la v.al. che corrisponde alla somma dei due punteggi. Abbiamo:
+    \begin{align}
+        E(Y) & = E(X_1) + E(X_2) \\
+        & = (1 + 2 + 3 + 4 + 5) \cdot \frac{1}{7} + 6 \cdot \frac{2}{7} + \frac{15}{7} + \frac{12}{7}\\
+        & = \frac{54}{7} \approx 7.7
+    \end{align}
+    Se i dadi non fossero stati truccati si avrebbe E(Y) = 7.
+\end{enumerate}
+\subsection{Varianza}
+Sia X v.al. con alfabeto \textit{X} e densità discreta \(p_x\). La varianza è il \textbf{numero reale \underline{positivo}}.
+\[Var(X) = \sum_{x_{k} \in \textit{X}}(x_k - E(X))^{2} p_x(x_k)\]
+\subsubsection{Esempio}
+Consideriamo \(X_1 \in \{-1, \frac{1}{4}, \frac{3}{4}\}\) con densità discreta \(p_{x_1} (-1) = p_{x_1} (\frac{1}{4}) = p_{x_1} (\frac{3}{4}) = \frac{1}{3}\) e \(X_2 \in \{-10,10\}\) con densità discreta \(p_{x_2}(-10) = p_{x_2}(10) = \frac{1}{2}\).\\
+Abbiamo \(E(X_1) = E(X_2) = 0\), ma
+\[Var(X_1) = \frac{1}{3}\cdot[(-1-0)^2 + (\frac{1}{4} - 0)^2 + (\frac{3}{4} - 0)^2] \approx 0.524\]
+\[Var(X_2) = \frac{1}{2}\cdot[(-10-0)^2 + (10 - 0)^2] = 100\]
+I valori di \(X_2\) sono tanto dispersi, cioè \textbf{lontani dalla media}.
+\subsubsection{Proprietà della Varianza}
+\begin{enumerate}
+    \item Var(X) = \(E[(X-E(X))^2]\) è la media di una funzione della v.al. X; usiamo g(x) = \((x-E(x))^2\)
+    \item Var(X) \(\geq 0\) e, in particolare, Var(X) = 0 \(\Longleftrightarrow X \equiv\) costante\\
+    Come lo vedo?\\
+    \begin{align}
+        Var(X) = 0 & \Longleftrightarrow \sum_{x_k \in \textit{X}}(x_k - E(X))^2 \cdot \underbrace{p_x(x_k)}_{> 0} = 0\\
+        & \Longleftrightarrow x_k - E(X) = 0, \forall x_k \in \textit{X}\\
+        & \Longleftrightarrow x_k = E(X), \forall x_k \in \textit{X}
+    \end{align}
+    \item Var(aX) = \(a^2\) Var(X), a \(\in \mathbb{R}\)\\
+    Come lo vedo?
+    \begin{align}
+        Var(aX) & = E[(aX - aE(x))^2]\\
+       \text{per linearità valor medio } & = E[(aX - aE(x))^2]\\
+       \text{per linearità valor medio } & = a^2 E[(X - E(X))^2] = a^2 Var(X)
+    \end{align}
+    \item Var(X+c) = Var(X), \(c \in \mathbb{R}\)\\
+    \paragraph{Osservazione Importante:} 3 e 4 mostrano che la varianza \textbf{NON E' LINEARE!}
+    \item Var(X) = \(E(X^2) - E(X)^2\)\\
+    Come lo vedo?
+    \begin{align}
+        Var(X) & = E[(X - E(X))^2]\\
+        & = E[X^2 - 2XE(X) + E(X)^2]\\
+    (1) & = E(X^2) - E(X)^2
+    \end{align}
+    (1) Indica che tale risoluzione è data da \(E(X) \in \mathbb{R}\) + linearità del valor medio.
+\end{enumerate}
+\subsubsection{Esercizio}
+L'urna 1 ha composizione: 1 pallina dorata, 4 palline verdi, 15 palline bianche. L'urna 2 invece contiene: 4 palline verdi e 25 palline bianche. Una pallina a caso viene spostata dall'urna 1 all'urna 2, quindi mi viene chiesto di estrarre una pallina dall'urna 2.\\
+Se estraggo la pallina dorata vinco 50 euro, se estraggo una pallina verde perdo 1 euro, altrimenti non vinco e non perdo.\\
+Sia X la v.al. che corrisponde alla vincita/perdita. Si calcoli la varianza di X.
+\paragraph{Soluzione:} Alfabeto \textit{X} = \{-1, 0, 50\}\\
+Densità discreta. Considero gli eventi \(T_i = \text{ "trasferisco una pallina i" con } i = O, V, B\), dove O sta per Oro, V per Verde e B per bianca,\\
+ed \(E_i = \text{ "estraggo una pallina i" con } i = O,V,B\).\\
+Otteniamo:
+\begin{align}
+    P(X=-1) = P(E_V) = P(E_V | T_B)\cdot P(T_B) & + P(E_V | T_V) \cdot P(T_V)\\ 
+    & + P(E_V | T_O) \cdot P(T_O)
+    \end{align}
+    \[= \frac{4}{30}\cdot \frac{15}{20} + \frac{5}{30}\cdot \frac{4}{20} +\frac{4}{30}\cdot \frac{1}{20} = \frac{7}{50}\]
+\begin{align}
+    P(X = 50) = P(E_O) = P(T_O \cap E_O) & = P(E_O | T_O) \cdot P(T_O)\\
+    & = \frac{1}{30} \cdot \frac{1}{20} = \frac{1}{600}
+\end{align}
+\begin{align}
+    P(X = 0) = 1 - P(X = -1) - P(X = 50) = \frac{103}{120}
+\end{align}
+\textbf{Varianza:}
+\begin{align}
+    Var(X) &= E(X^2) - E(X)^2\\
+    &= (-1)^2 \cdot \frac{7}{50} + (50)^2 \cdot \frac{1}{600} - [(-1) \cdot \frac{7}{50} + 50 \cdot \frac{1}{600}]^2\\
+    &\approx 4.3
+\end{align}
+
+\chapter{Lezione 11}
+La lezione 10 è stata usata per esercizi di ripasso.
+\section{Variabili Aleatorie Discrete Notevoli}
+La densità discreta contiene la descrizione probabilistica di una variabile aleatoria. Quindi due v.al. X e Y con la stessa densità sono \textbf{probabilisticamente indistinguibili} (o equidistribuite o identicamente distribuite), nel senso che \(P(X \in B) = P(Y \in B)\) per ogni B sottoinsieme dell'alfabeto. 
+\paragraph{Attenzione:} ciò \textbf{non significa che} X = Y.\\
+Assegnata una densita \textit{p(.)} si può allora associare la famiglia delle v.al. X che hanno densità \(p_x(.) = p(.)\)
+\subsection{Caso di Alfabeto Finito}
+\subsubsection{Variabili Aleatorie di Bernoulli}
+\[X \sim B_e(p) \text{ con } p \in [0,1]\]
+\[\text{se ha:} \begin{cases}
+\text{alfabeto}, & \textit{X} =\{0,1\}\\
+\text{densità discreta}, & \(p_x(1) = p, p_x(0) = 1-p\)
+\end{cases}\]
+Inoltre, \textit{E(X) = p} e \textit{Var(X) = p(1-p)}
+\subsubsection{Esempi}
+\begin{enumerate}
+    \item X v.al. che assume valore 1 se lanciando una moneta ottengo testa e assume valore 0 altrimenti. Si ha \(X \sim B_e(\frac{1}{2})\)
+    \item Y v.al. che assume valore 1 se lanciando un dado ottengo un numero pari e assume valore 0 altrimenti. Si ha \(Y \sim B_e (\frac{1}{2})\)\\
+    In questi due casi X e Y sono probabilisticamente indistinguibili ma \textbf{X è diversa da Y}
+    \item Sia \((\Omega, \textit{F}, P)\) uno spazio di probabilità e \(E \in \textit{F}\) un evento. Definiamo la v.al.: \(\mathds{1}_E(\omega) =\)
+    \(\begin{cases}
+    1, & \text{ se } \omega \in E\\
+    0, & \text{altrimenti}
+    \end{cases}\)\\
+    \\
+    Si ha \(\mathds{1}_E \sim B_e(P(E))\). Infatti otteniamo:
+    \[p = P( \mathds{1}_E = 1) = P (\{\omega \in \Omega: \omega \in E\} = P(E)\]
+\end{enumerate}
+\subsection{Schema di Bernoulli (o schema a Prove Indipendenti)}
+Si divide in due pari: quella del \textbf{contesto sperimentale} e quella del \textbf{modello probabilistico}, che sono identiche tranne che nella forma in cui sono espresse.
+\subsubsection{Contesto Sperimentale}
+\begin{itemize}
+    \item Un certo numero \(n \geq 1\) di prove \textbf{identiche} effettuate in sequenza
+    \item Ogni prova ha \textbf{2 esiti} possibili codificati con \textbf{0 e 1}
+    \item Il risultato di ciascuna prova \textbf{non influenza} il risultato delle altre
+\end{itemize}
+\subsubsection{Modello probabilistico}
+\begin{itemize}
+    \item Consideriamo \(X_1,...,X_n\) v.al. \textbf{identicamente distribuite}
+    \item \(X_i \sim B_e(p)\) (con i = 1,...,n) e \textit{p} è la probabilità di ottenere 1
+    \item Gli eventi \(\{X_1 = 1\},..., \{X_n = 1\}\) sono tra loro \textbf{indipendenti}
+\end{itemize}
+\subsection{Esempi}
+\begin{enumerate}
+    \item Una rete è composta da 150 terminali connessi ad un server. Controllo quali terminali sono pronti per trasmettere un lavoro. Per i = 1,...,150 si ha: \[X_i = 
+    \begin{cases}
+    1, & \text{ se l'i-esimo terminale è pronto per trasmettere un lavoro}\\
+    0, & \text{ altrimenti}
+    \end{cases}\]
+    \item Controllo di qualità in una linea di produzione di chip. Ogni giorno ne vengono testati 1000. Per i = 1,...,1000 si ha: \[X_i =
+    \begin{cases}
+    1, & \text{ se l'i-esimo chip è difettoso}\\
+    0, & \text{ altrimenti}
+    \end{cases}\]
+    \item Errori in una trasmissione digitale di 1200000 bit. Per i = 1,...,1200000 si ha: \[X_i = 
+    \begin{cases}
+    1, & \text{ se l'i-esimo bit è stato trasmesso errato}\\
+    0, & \text{ altrimenti}
+    \end{cases}\]
+\end{enumerate}
+\section{Variabili Aleatorie Binomiali}
+\[X \sim Bin(n,p) \text{ con } n \in \mathbb{N} = \{1,2,...\} \text{ e } p \in [0,1]\]
+\[\text{se ha: }
+\begin{cases}
+\text{alfabeto}, & \textit{X} = \{0,1,...,n\}\\
+\text{dens. discr.}, & p_x(k) = \binom{n}{k}\cdot p^k (1-p)^{n-k}, k \in \textit{X}
+\end{cases}\]
+Inoltre, \textit{E(X) = np} e \textit{Var(X) = np(1-p)}.\\
+La variabile aleatoria binomiale conta il numero di successi (cioè di numeri "1") in uno schema di Bernoulli con n prove indipendenti, dove la probabilità di successo è p.
+\paragraph{Contesto:} le v.al. \(X_i \sim B_e(p)\) (i = 1,...,n) sono gli esiti delle n prove e la loro somma
+\[X = \sum_{i = 1}^{n} X_i \sim Bin(n,p)\]
+è il numero di successi ottenuti nelle n prove.\\
+\textbf{Cruciale:} indipendenza degli eventi \(\{X_1 = 1\},..., \{X_n = 1\}\)
+\paragraph{Interpretazione densità}
+\begin{align}
+    p_x(k) &= P(\text{ottenere k successi in n prove})\\
+    &= P(\text{ottenere stringa binaria di n cifre con k cifre 1}\\
+    &= \underbrace{\binom{n}{k}}_\text{num. stringhe di lunghezza n con k cifre 1} \cdot \underbrace{p^k}_\text{prob. di avere k cifre 1} \cdot \underbrace{(1-p)^{n-k}}_\text{prob. di avere n-k cifre 0}
+\end{align}
+\(p^k \cdot (1-p)^{n-k}\) indicano anche \textbf{equidistribuzione + indipendenza}.
+\subsection{Esempio}
+Supponiamo di fissare n = 5, k = 1 e di voler calcolare la probabilità della stringa '00010'. Se \(X_i \sim B_e(p)\) si ottiene:
+\begin{align}
+    P(00010) & = P(X_1=X_2=X_3=0, X_4=1, X_5 = 0)\\
+    \xrightarrow{indip.} & = P(X_1=0)P(X_2=0)P(X_3=0)P(X_4=1)P(X_5=0)\\
+    \xrightarrow{equidistr.} & = (1-p)^4 \cdot p
+\end{align}
+Analogamente, possiamo calcolare:
+\begin{align}
+    P(01000) & = P(X_1=0)P(X_2=1)P(X_3=0)P(X_4=0)P(X_5=0)\\
+    & = (1-p)^4 \cdot p
+\end{align}
+Per indipendenza ed equidistribuzione, tutte le stringhe di lunghezza 5 con una sola cifra 1 sono equiprobabili.
+\subsection{Esercizio}
+E' più facile ottenere almeno un 6 lanciando 4 volte un dado oppure ottenere almeno un doppio 6 lanciando 24 volte una coppia di dadi?
+\paragraph{Soluzione}
+\begin{itemize}
+    \item \textbf{Lancio singolo:} Costruiamo uno schema di Bernoulli. Per ogni i = 1,...,4 definiamo le v.al.
+    \[X_i = 
+    \begin{cases}
+    1, & \text{ se all'i-esimo lancio ottengo 6}\\
+    0, & \text{ altrimenti}
+    \end{cases}\]
+    Si ha \(X_i \sim B_e (\frac{1}{6})\). Inoltre gli eventi \(\{X_1 = 1\},...,\{X_4 = 1\}\) sono indipendenti. Allora il numero di punteggi 6 ottenuti nei 4 lanci è:
+    \[X = \sum_{i = 1}^{4} X_i \sim Bin(4, \frac{1}{6})\]
+    Calcoliamo:
+    \[P(X \geq 1) = 1 - P(X = 0) = 1 - (\frac{5}{6})^4 \approx 0.518\]
+    \item \textbf{Lancio doppio:} Costruiamo uno schema di Bernoulli. Per i = 1,...,24 definiamo le v.al.
+    \[Y_i = \begin{cases}
+    1, & \text{ se all'i-esimo lancio ottengo una coppia di 6}\\
+    0, & \text{ altrimenti}
+    \end{cases}\]
+    Si ha \(Y_i \sim B_e (\frac{1}{36})\). Inoltre gli eventi \(\{Y_1 = 1\},..., \{Y_{24} = 1\}\) sono indipendenti. Allora il numero di volte che ottengo un doppio 6 nei 24 lanci è:
+    \[Y = \sum_{i = 1}^{24} Y_i \sim Bin(24. \frac{1}{36})\]
+    Calcoliamo:
+    \[P(Y \geq 1) = 1 - P(Y = 0) = 1 - (\frac{35}{36})^{24} \approx 0.49\]
+    Quinidi è più facile ottenere almeno un 6 lanciando un dado.
+\end{itemize}
 \end{document}
